@@ -1,20 +1,20 @@
-[‚±‚ê‚Í‰½‚©]
-@Windows‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚½MIDIƒfƒoƒCƒX‚ðPC—pƒL[ƒ{[ƒh‚Ì
-@‰pŽšƒL[‚ð‰Ÿ‚·‚±‚Æ‚É‚æ‚Á‚Ä–Â‚ç‚·ƒ\ƒtƒgƒEƒFƒA‚Å‚·B
+[ã“ã‚Œã¯ä½•ã‹]
+ã€€Windowsã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚ŒãŸMIDIãƒ‡ãƒã‚¤ã‚¹ã‚’PCç”¨ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®
+ã€€è‹±å­—ã‚­ãƒ¼ã‚’æŠ¼ã™ã“ã¨ã«ã‚ˆã£ã¦é³´ã‚‰ã™ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã§ã™ã€‚
 
-[“®ìŠÂ‹«]
-@Windowsê—p‚Å‚·B
-@rubyƒCƒ“ƒ^ƒvƒŠƒ^‚ÆRuby/SDL‚ª•K—v‚Å‚·B
-@mƒTƒEƒ“ƒh‚ÆƒI[ƒfƒBƒIƒfƒoƒCƒXnƒRƒ“ƒgƒ[ƒ‹ƒpƒlƒ‹‚Å
-@MIDI‚Ì‹K’è‚ÌƒfƒoƒCƒX‚Æ‚µ‚Ä—LŒø‚ÈƒfƒoƒCƒX‚ª‘I‘ð‚³‚ê‚Ä
-@‚¢‚é•K—v‚ª‚ ‚è‚Ü‚·B
+[å‹•ä½œç’°å¢ƒ]
+ã€€Windowså°‚ç”¨ã§ã™ã€‚
+ã€€rubyã‚¤ãƒ³ã‚¿ãƒ—ãƒªã‚¿ã¨Ruby/SDLãŒå¿…è¦ã§ã™ã€‚
+ã€€ï¼»ã‚µã‚¦ãƒ³ãƒ‰ã¨ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªãƒ‡ãƒã‚¤ã‚¹ï¼½ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ‘ãƒãƒ«ã§
+ã€€MIDIã®è¦å®šã®ãƒ‡ãƒã‚¤ã‚¹ã¨ã—ã¦æœ‰åŠ¹ãªãƒ‡ãƒã‚¤ã‚¹ãŒé¸æŠžã•ã‚Œã¦
+ã€€ã„ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 
-[Žg‚¢•û]
-@midi.bat‚©‚ç‹N“®‚µ‚Ä‚­‚¾‚³‚¢B
-@Žg‚¢•û‚Í‰æ–Ê‚É•\Ž¦‚³‚ê‚Ü‚·B
+[ä½¿ã„æ–¹]
+ã€€midi.batã‹ã‚‰èµ·å‹•ã—ã¦ãã ã•ã„ã€‚
+ã€€ä½¿ã„æ–¹ã¯ç”»é¢ã«è¡¨ç¤ºã•ã‚Œã¾ã™ã€‚
 
-[ì‚Á‚½l]
-@‹´–{ KŽ÷
+[ä½œã£ãŸäºº]
+ã€€æ©‹æœ¬ å¹¸æ¨¹
   http://d.hatena.ne.jp/koki-h/
 
-ƒ‰ƒCƒZƒ“ƒX‚ÍRuby‚Æ“¯‚¶‚Å‚·Bi‚ ‚Ü‚è—Ç‚­‚í‚©‚Á‚Ä‚¢‚Ü‚¹‚ñ‚ªEEj
+ãƒ©ã‚¤ã‚»ãƒ³ã‚¹ã¯Rubyã¨åŒã˜ã§ã™ã€‚ï¼ˆã‚ã¾ã‚Šè‰¯ãã‚ã‹ã£ã¦ã„ã¾ã›ã‚“ãŒãƒ»ãƒ»ï¼‰
