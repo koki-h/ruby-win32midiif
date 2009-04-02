@@ -1,32 +1,32 @@
-#ƒL[ƒ{[ƒh‚ğ‰Ÿ‚·‚Æ‰¹‚ªo‚Ü‚·
+#ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚’æŠ¼ã™ã¨éŸ³ãŒå‡ºã¾ã™
 require 'sdl'
 require 'winMidiIF'
-@baseNote = 60 #A‚ÌƒL[‚ğ‰Ÿ‚µ‚½‚Æ‚«‚Ì‰¹ŠK
-@sound    = 0  #‰¹F
-@octave   = 0  #ƒIƒNƒ^[ƒu
+@baseNote = 60 #Aã®ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã¨ãã®éŸ³éš
+@sound    = 0  #éŸ³è‰²
+@octave   = 0  #ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–
 def keymap2Note(key)
   case key.sym
   when SDL::Key::A #C
     note = @baseNote + @octave
-  when SDL::Key::W #Dó
+  when SDL::Key::W #Dâ™­
     note = @baseNote + 1 + @octave
   when SDL::Key::S #D
     note = @baseNote + 2 + @octave
-  when SDL::Key::E #Dò
+  when SDL::Key::E #Dâ™¯
     note = @baseNote + 3 + @octave
   when SDL::Key::D #E
     note = @baseNote + 4 + @octave
   when SDL::Key::F #F
     note = @baseNote + 5 + @octave
-  when SDL::Key::T #Fò
+  when SDL::Key::T #Fâ™¯
     note = @baseNote + 6 + @octave
   when SDL::Key::G #G
     note = @baseNote + 7 + @octave
-  when SDL::Key::Y #Gò
+  when SDL::Key::Y #Gâ™¯
     note = @baseNote + 8 + @octave
   when SDL::Key::H #A
     note = @baseNote + 9 + @octave
-  when SDL::Key::U #Aò
+  when SDL::Key::U #Aâ™¯
     note = @baseNote + 10 + @octave
   when SDL::Key::J #B
     note = @baseNote + 11 + @octave
@@ -37,7 +37,7 @@ def keymap2Note(key)
 end
 
 SDL.init( SDL::INIT_VIDEO ) 
-#‰æ–Ê‰Šú‰»
+#ç”»é¢åˆæœŸåŒ–
 SDL::WM.setCaption("midiInput","")
 screen = SDL.setVideoMode( 640, 480, 16, SDL::SWSURFACE ) 
 image = SDL::Surface.load( 'surface.bmp' )
@@ -49,12 +49,12 @@ midi = MidiDevice.new
 loop do
   midi.changeSound(@sound)
   while event = SDL::Event2.poll
-    #‰¹ŠK
+    #éŸ³éš
     case event 
     when SDL::Event2::Quit 
       exit 
     when SDL::Event2::KeyDown
-      #ƒsƒbƒ`‚ğã‚°‰º‚°‚·‚é
+      #ãƒ”ãƒƒãƒã‚’ä¸Šã’ä¸‹ã’ã™ã‚‹
       case event.sym
       when SDL::Key::PAGEUP
         @baseNote += 1
@@ -63,7 +63,7 @@ loop do
         @baseNote -= 1
         p "note:" + @baseNote.to_s
       end
-      #‰¹F‚ğ•Ï‚¦‚é
+      #éŸ³è‰²ã‚’å¤‰ãˆã‚‹
       case event.sym
       when SDL::Key::UP
         if @sound < 127
@@ -80,21 +80,21 @@ loop do
         end
         p SOUND_LIST[@sound]
       end
-      #ƒIƒNƒ^[ƒuƒ`ƒFƒ“ƒW
+      #ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ãƒã‚§ãƒ³ã‚¸
       case event.sym
       when SDL::Key::LSHIFT 
         @octave -= 12
       when SDL::Key::RSHIFT 
         @octave += 12
       end
-      #‰¹‚ğo‚·
+      #éŸ³ã‚’å‡ºã™
       note = keymap2Note(event)
       midi.playMidiSound(note,127) if note != nil
     when SDL::Event2::KeyUp
-      #‰¹‚ğÁ‚·
+      #éŸ³ã‚’æ¶ˆã™
       note = keymap2Note(event)
       midi.stopMidiSound(note,127) if note != nil
-      #ƒIƒNƒ^[ƒuƒ`ƒFƒ“ƒW‚ğ–ß‚·
+      #ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ãƒã‚§ãƒ³ã‚¸ã‚’æˆ»ã™
       case event.sym
       when SDL::Key::LSHIFT
         midi.allStop

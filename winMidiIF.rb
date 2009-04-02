@@ -1,45 +1,45 @@
 require 'Win32API'
 class MidiDevice
   def initialize
-    #APIŠÖ”‚ğƒCƒ“ƒ|[ƒg
-    #ƒfƒoƒCƒXƒI[ƒvƒ“
+    #APIé–¢æ•°ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
+    #ãƒ‡ãƒã‚¤ã‚¹ã‚ªãƒ¼ãƒ—ãƒ³
     midiOutOpen = Win32API.new('winmm','midiOutOpen','PPLLL','L')
-    #ƒƒbƒZ[ƒW‚ğ‘—M
+    #ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ä¿¡
     @midiOutShortMsg = Win32API.new('winmm','midiOutShortMsg','LP','L')
     @midiOutReset = Win32API.new('winmm','midiOutReset','P','L')
     @midiOutClose = Win32API.new('winmm','midiOutClose','P','V')
     
-    #ƒfƒoƒCƒX‚ÌƒAƒhƒŒƒX‚ğæ“¾
-    midiPtrBuff = "    " #ƒ|ƒCƒ“ƒ^‚ÉŠi”[‚³‚ê‚½’l‚ğó‚¯æ‚é‚½‚ß‚Ìƒoƒbƒtƒ@—Ìˆæiƒ|ƒCƒ“ƒ^‚ÌƒTƒCƒY‚Í4ƒoƒCƒgj
+    #ãƒ‡ãƒã‚¤ã‚¹ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
+    midiPtrBuff = "    " #ãƒã‚¤ãƒ³ã‚¿ã«æ ¼ç´ã•ã‚ŒãŸå€¤ã‚’å—ã‘å–ã‚‹ãŸã‚ã®ãƒãƒƒãƒ•ã‚¡é ˜åŸŸï¼ˆãƒã‚¤ãƒ³ã‚¿ã®ã‚µã‚¤ã‚ºã¯4ãƒã‚¤ãƒˆï¼‰
     midiOutOpen.call(midiPtrBuff,0,0,0,0)
-    @ptr = midiPtrBuff.unpack("I")[0] #•¶š—ñŒ^‚Å–ß‚Á‚Ä‚«‚½’l‚ğ”’l‚É•ÏŠ·
+    @ptr = midiPtrBuff.unpack("I")[0] #æ–‡å­—åˆ—å‹ã§æˆ»ã£ã¦ããŸå€¤ã‚’æ•°å€¤ã«å¤‰æ›
   end
   def playMidiSound(note,vol)
     data = []
-    data[0] = 0x90 + 0 # ”­‰¹ƒƒbƒZ[ƒW + ƒ`ƒƒƒ“ƒlƒ‹
-    data[1] = note     # ƒm[ƒg”Ô†
-    data[2] = vol      # ‰¹—Ê
-    data[3] =   0      # g‚í‚ê‚È‚¢
-    msg = data.pack("CCCC").unpack("i")[0] #”z—ñ‚ÌŠe—v‘f‚ğ‚SƒoƒCƒg•Ï”‚ÌŠeƒoƒCƒg‚ÉŠ„‚è“–‚Ä
-    @midiOutShortMsg.call(@ptr,msg)   # ƒƒbƒZ[ƒW‚ğ‘—M
+    data[0] = 0x90 + 0 # ç™ºéŸ³ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ + ãƒãƒ£ãƒ³ãƒãƒ«
+    data[1] = note     # ãƒãƒ¼ãƒˆç•ªå·
+    data[2] = vol      # éŸ³é‡
+    data[3] =   0      # ä½¿ã‚ã‚Œãªã„
+    msg = data.pack("CCCC").unpack("i")[0] #é…åˆ—ã®å„è¦ç´ ã‚’ï¼”ãƒã‚¤ãƒˆå¤‰æ•°ã®å„ãƒã‚¤ãƒˆã«å‰²ã‚Šå½“ã¦
+    @midiOutShortMsg.call(@ptr,msg)   # ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ä¿¡
   end
   def stopMidiSound(note,vol)
     data = []
-    data[0] = 0x80 + 0 # ”­‰¹ƒƒbƒZ[ƒW + ƒ`ƒƒƒ“ƒlƒ‹
-    data[1] = note     # ƒm[ƒg”Ô†
-    data[2] = vol      # ‰¹—Ê
-    data[3] = 0        # g‚í‚ê‚È‚¢
-    msg = data.pack("CCCC").unpack("i")[0] #”z—ñ‚ÌŠe—v‘f‚ğ‚SƒoƒCƒg•Ï”‚ÌŠeƒoƒCƒg‚ÉŠ„‚è“–‚Ä
-    @midiOutShortMsg.call(@ptr,msg)   # ƒƒbƒZ[ƒW‚ğ‘—M
+    data[0] = 0x80 + 0 # ç™ºéŸ³ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ + ãƒãƒ£ãƒ³ãƒãƒ«
+    data[1] = note     # ãƒãƒ¼ãƒˆç•ªå·
+    data[2] = vol      # éŸ³é‡
+    data[3] = 0        # ä½¿ã‚ã‚Œãªã„
+    msg = data.pack("CCCC").unpack("i")[0] #é…åˆ—ã®å„è¦ç´ ã‚’ï¼”ãƒã‚¤ãƒˆå¤‰æ•°ã®å„ãƒã‚¤ãƒˆã«å‰²ã‚Šå½“ã¦
+    @midiOutShortMsg.call(@ptr,msg)   # ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ä¿¡
   end
   def changeSound(soundId)
     data = []
-    data[0] = 0xC0 + 0 # ”­‰¹ƒƒbƒZ[ƒW + ƒ`ƒƒƒ“ƒlƒ‹
-    data[1] = soundId  # ‰¹F”Ô†
-    data[2] = 0        # g‚í‚ê‚È‚¢
-    data[3] = 0        # g‚í‚ê‚È‚¢
-    msg = data.pack("CCCC").unpack("i")[0] #”z—ñ‚ÌŠe—v‘f‚ğ‚SƒoƒCƒg•Ï”‚ÌŠeƒoƒCƒg‚ÉŠ„‚è“–‚Ä
-    @midiOutShortMsg.call(@ptr,msg)   # ƒƒbƒZ[ƒW‚ğ‘—M
+    data[0] = 0xC0 + 0 # ç™ºéŸ³ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ + ãƒãƒ£ãƒ³ãƒãƒ«
+    data[1] = soundId  # éŸ³è‰²ç•ªå·
+    data[2] = 0        # ä½¿ã‚ã‚Œãªã„
+    data[3] = 0        # ä½¿ã‚ã‚Œãªã„
+    msg = data.pack("CCCC").unpack("i")[0] #é…åˆ—ã®å„è¦ç´ ã‚’ï¼”ãƒã‚¤ãƒˆå¤‰æ•°ã®å„ãƒã‚¤ãƒˆã«å‰²ã‚Šå½“ã¦
+    @midiOutShortMsg.call(@ptr,msg)   # ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ä¿¡
   end
   def allStop()
     @midiOutReset.call(@ptr)
@@ -48,7 +48,7 @@ class MidiDevice
     @midiOutClose.call(@ptr)
   end
 end
-#‰¹FƒŠƒXƒg
+#éŸ³è‰²ãƒªã‚¹ãƒˆ
 SOUND_LIST = {
   0x00 => "Acoustic Grand Piano",
   0x01 => "Bright Acoustic Piano",
@@ -179,35 +179,35 @@ SOUND_LIST = {
   0x7E => "Applause",
   0x7F => "Gunshot"
 }
-#ƒeƒXƒg
+#ãƒ†ã‚¹ãƒˆ
 if __FILE__ == $0
 midi = MidiDevice.new
-#midi.playMidiSound(60,127)#ƒm[ƒg”Ô†(60=ƒh)
-#sleep(1) # ”­‰¹ŠÔ
-#midi.playMidiSound(62,127)#ƒm[ƒg”Ô†(62=ƒŒ)
-#sleep(1) # ”­‰¹ŠÔ
-#midi.playMidiSound(64,127)#ƒm[ƒg”Ô†(64=ƒ~)
-#sleep(1) # ”­‰¹ŠÔ
-#midi.playMidiSound(65,127)#ƒm[ƒg”Ô†(65=ƒtƒ@)
-#sleep(1) # ”­‰¹ŠÔ
-#midi.playMidiSound(67,127)#ƒm[ƒg”Ô†(67=ƒ\)
-#sleep(1) # ”­‰¹ŠÔ
-#midi.playMidiSound(69,127)#ƒm[ƒg”Ô†(69=ƒ‰)
-#sleep(1) # ”­‰¹ŠÔ
-#midi.playMidiSound(71,127)#ƒm[ƒg”Ô†(71=ƒV)
-#sleep(1) # ”­‰¹ŠÔ
-#midi.playMidiSound(72,127)#ƒm[ƒg”Ô†(72=ƒh)
-sleep(1) # ”­‰¹ŠÔ
-#˜a‰¹
+#midi.playMidiSound(60,127)#ãƒãƒ¼ãƒˆç•ªå·(60=ãƒ‰)
+#sleep(1) # ç™ºéŸ³æ™‚é–“
+#midi.playMidiSound(62,127)#ãƒãƒ¼ãƒˆç•ªå·(62=ãƒ¬)
+#sleep(1) # ç™ºéŸ³æ™‚é–“
+#midi.playMidiSound(64,127)#ãƒãƒ¼ãƒˆç•ªå·(64=ãƒŸ)
+#sleep(1) # ç™ºéŸ³æ™‚é–“
+#midi.playMidiSound(65,127)#ãƒãƒ¼ãƒˆç•ªå·(65=ãƒ•ã‚¡)
+#sleep(1) # ç™ºéŸ³æ™‚é–“
+#midi.playMidiSound(67,127)#ãƒãƒ¼ãƒˆç•ªå·(67=ã‚½)
+#sleep(1) # ç™ºéŸ³æ™‚é–“
+#midi.playMidiSound(69,127)#ãƒãƒ¼ãƒˆç•ªå·(69=ãƒ©)
+#sleep(1) # ç™ºéŸ³æ™‚é–“
+#midi.playMidiSound(71,127)#ãƒãƒ¼ãƒˆç•ªå·(71=ã‚·)
+#sleep(1) # ç™ºéŸ³æ™‚é–“
+#midi.playMidiSound(72,127)#ãƒãƒ¼ãƒˆç•ªå·(72=ãƒ‰)
+sleep(1) # ç™ºéŸ³æ™‚é–“
+#å’ŒéŸ³
 midi.changeSound(50)
-midi.playMidiSound(60,127)#ƒm[ƒg”Ô†(60=ƒh)
-sleep(1) # ”­‰¹ŠÔ
-midi.playMidiSound(64,127)#ƒm[ƒg”Ô†(64=ƒ~)
-sleep(1) # ”­‰¹ŠÔ
-midi.playMidiSound(67,127)#ƒm[ƒg”Ô†(67=ƒ\)
-sleep(1) # ”­‰¹ŠÔ
-midi.playMidiSound(72,127)#ƒm[ƒg”Ô†(72=ƒh)
-sleep(1) # ”­‰¹ŠÔ
+midi.playMidiSound(60,127)#ãƒãƒ¼ãƒˆç•ªå·(60=ãƒ‰)
+sleep(1) # ç™ºéŸ³æ™‚é–“
+midi.playMidiSound(64,127)#ãƒãƒ¼ãƒˆç•ªå·(64=ãƒŸ)
+sleep(1) # ç™ºéŸ³æ™‚é–“
+midi.playMidiSound(67,127)#ãƒãƒ¼ãƒˆç•ªå·(67=ã‚½)
+sleep(1) # ç™ºéŸ³æ™‚é–“
+midi.playMidiSound(72,127)#ãƒãƒ¼ãƒˆç•ªå·(72=ãƒ‰)
+sleep(1) # ç™ºéŸ³æ™‚é–“
 midi.stopMidiSound(72,127)
 midi.close
 end
