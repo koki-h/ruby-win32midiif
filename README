@@ -4,10 +4,15 @@
 
 [動作環境]
 　Windows専用です。
+
 　rubyインタプリタとRuby/SDLが必要です。
+ Ruby/SDLのインストール方法は るびま の記事が参考になると思います。
+　http://jp.rubyist.net/magazine/?0018-GameProgramingForRubySDL
+
 　［サウンドとオーディオデバイス］コントロールパネルで
 　MIDIの規定のデバイスとして有効なデバイスが選択されて
 　いる必要があります。
+
   WindowsXPとVistaで（一応）動作しました。
   Ruby1.9では動作確認していません。
 
