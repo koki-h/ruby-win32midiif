@@ -1,5 +1,25 @@
 require 'Win32API'
+class MidiChannel
+  def initialize(device,no)
+    @device = device
+    @no = no
+  end
+  def playMidiSound(note,vol)
+    @device.channel = @no
+    @device.playMidiSound(note,vol)
+  end
+  def stopMidiSound(note,vol)
+    @device.channel = @no
+    @device.stopMidiSound(note,vol)
+  end
+  def changeSound(soundId)
+    @device.channel = @no
+    @device.changeSound(note,vol)
+  end
+end
+
 class MidiDevice
+  attr_accessor :channel
   def initialize
     #API関数をインポート
     #デバイスオープン
@@ -13,10 +33,13 @@ class MidiDevice
     midiPtrBuff = "    " #ポインタに格納された値を受け取るためのバッファ領域（ポインタのサイズは4バイト）
     midiOutOpen.call(midiPtrBuff,0,0,0,0)
     @ptr = midiPtrBuff.unpack("I")[0] #文字列型で戻ってきた値を数値に変換
+    @using_channels = []
+    #デフォルトのチャンネル番号
+    @channel = 0
   end
   def playMidiSound(note,vol)
     data = []
-    data[0] = 0x90 + 0 # 発音メッセージ + チャンネル
+    data[0] = 0x90 + @channel # 発音メッセージ + チャンネル
     data[1] = note     # ノート番号
     data[2] = vol      # 音量
     data[3] =   0      # 使われない
@@ -25,7 +48,7 @@ class MidiDevice
   end
   def stopMidiSound(note,vol)
     data = []
-    data[0] = 0x80 + 0 # 発音メッセージ + チャンネル
+    data[0] = 0x80 + @channel # 発音メッセージ + チャンネル
     data[1] = note     # ノート番号
     data[2] = vol      # 音量
     data[3] = 0        # 使われない
@@ -34,12 +57,20 @@ class MidiDevice
   end
   def changeSound(soundId)
     data = []
-    data[0] = 0xC0 + 0 # 発音メッセージ + チャンネル
+    data[0] = 0xC0 + @channel # 発音メッセージ + チャンネル
     data[1] = soundId  # 音色番号
     data[2] = 0        # 使われない
     data[3] = 0        # 使われない
     msg = data.pack("CCCC").unpack("i")[0] #配列の各要素を４バイト変数の各バイトに割り当て
     @midiOutShortMsg.call(@ptr,msg)   # メッセージを送信
+  end
+  def openChannel(no)
+    channel = @using_channels.find {|c| c.no == no}
+    unless channel
+      channel = MidiChannel.new(self,no)
+      @using_channels.push(channel)
+    end
+    channel
   end
   def allStop()
     @midiOutReset.call(@ptr)
@@ -181,33 +212,39 @@ SOUND_LIST = {
 }
 #テスト
 if __FILE__ == $0
-midi = MidiDevice.new
-#midi.playMidiSound(60,127)#ノート番号(60=ド)
-#sleep(1) # 発音時間
-#midi.playMidiSound(62,127)#ノート番号(62=レ)
-#sleep(1) # 発音時間
-#midi.playMidiSound(64,127)#ノート番号(64=ミ)
-#sleep(1) # 発音時間
-#midi.playMidiSound(65,127)#ノート番号(65=ファ)
-#sleep(1) # 発音時間
-#midi.playMidiSound(67,127)#ノート番号(67=ソ)
-#sleep(1) # 発音時間
-#midi.playMidiSound(69,127)#ノート番号(69=ラ)
-#sleep(1) # 発音時間
-#midi.playMidiSound(71,127)#ノート番号(71=シ)
-#sleep(1) # 発音時間
-#midi.playMidiSound(72,127)#ノート番号(72=ド)
-sleep(1) # 発音時間
-#和音
-midi.changeSound(50)
-midi.playMidiSound(60,127)#ノート番号(60=ド)
-sleep(1) # 発音時間
-midi.playMidiSound(64,127)#ノート番号(64=ミ)
-sleep(1) # 発音時間
-midi.playMidiSound(67,127)#ノート番号(67=ソ)
-sleep(1) # 発音時間
-midi.playMidiSound(72,127)#ノート番号(72=ド)
-sleep(1) # 発音時間
-midi.stopMidiSound(72,127)
-midi.close
+  midi = MidiDevice.new
+  #midi.playMidiSound(60,127)#ノート番号(60=ド)
+  #sleep(1) # 発音時間
+  #midi.playMidiSound(62,127)#ノート番号(62=レ)
+  #sleep(1) # 発音時間
+  #midi.playMidiSound(64,127)#ノート番号(64=ミ)
+  #sleep(1) # 発音時間
+  #midi.playMidiSound(65,127)#ノート番号(65=ファ)
+  #sleep(1) # 発音時間
+  #midi.playMidiSound(67,127)#ノート番号(67=ソ)
+  #sleep(1) # 発音時間
+  #midi.playMidiSound(69,127)#ノート番号(69=ラ)
+  #sleep(1) # 発音時間
+  #midi.playMidiSound(71,127)#ノート番号(71=シ)
+  #sleep(1) # 発音時間
+  #midi.playMidiSound(72,127)#ノート番号(72=ド)
+  sleep(1) # 発音時間
+  #和音
+  midi.changeSound(50)
+  midi.playMidiSound(60,127)#ノート番号(60=ド)
+  sleep(1) # 発音時間
+  midi.playMidiSound(64,127)#ノート番号(64=ミ)
+  sleep(1) # 発音時間
+  midi.playMidiSound(67,127)#ノート番号(67=ソ)
+  sleep(1) # 発音時間
+  midi.playMidiSound(72,127)#ノート番号(72=ド)
+  sleep(1) # 発音時間
+  midi.stopMidiSound(72,127)
+  #ドラム
+  drum_cannel = midi.openChannel(9)
+  10.times do
+    drum_cannel.playMidiSound(67,127)
+    sleep(0.5) # 発音時間
+  end
+  midi.close
 end
