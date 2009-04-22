@@ -14,7 +14,7 @@ class MidiChannel
   end
   def changeSound(soundId)
     @device.channel = @no
-    @device.changeSound(note,vol)
+    @device.changeSound(soundId)
   end
 end
 

@@ -45,6 +45,7 @@ image = image.displayFormat
 SDL.blitSurface( image, 0, 0, 0, 0, screen, 0, 0 )
 screen.updateRect( 0, 0, 0, 0 )
 
+#midi = MidiDevice.new.openChannel(9) #ドラムを使いたいとき
 midi = MidiDevice.new
 loop do
   midi.changeSound(@sound)
